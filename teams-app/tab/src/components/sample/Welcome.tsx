@@ -12,19 +12,12 @@ import { EditCode } from "./EditCode";
 import { Deploy } from "./Deploy";
 import { Publish } from "./Publish";
 import { AddSSO } from "./AddSSO";
+import RealtimeUpdate  from "./RealtimeUpdate";
+import Register  from "./Register";
 
-export function Welcome(props: { environment?: string }) {
-  const { environment } = {
-    environment: window.location.hostname === "localhost" ? "local" : "azure",
-    ...props,
-  };
-  const friendlyEnvironmentName =
-    {
-      local: "local environment",
-      azure: "Azure environment",
-    }[environment] || "local environment";
-
-  const [selectedValue, setSelectedValue] = useState<TabValue>("local");
+export function Welcome() {
+  
+  const [selectedValue, setSelectedValue] = useState<TabValue>("realtimeUpdate");
 
   const onTabSelect = (event: SelectTabEvent, data: SelectTabData) => {
     setSelectedValue(data.value);
@@ -35,32 +28,30 @@ export function Welcome(props: { environment?: string }) {
       <div className="narrow page-padding">
         <Image src="hello.png" />
         <h1 className="center">Congratulations!</h1>
-        <p className="center">Your app is running in your {friendlyEnvironmentName}</p>
         <div className="tabList">
           <TabList selectedValue={selectedValue} onTabSelect={onTabSelect}>
-            <Tab id="Local" value="local">
-              1. Build your app locally
+            <Tab id="register" value="register">
+              1. Register child
             </Tab>
-            <Tab id="Azure" value="azure">
-              2. Provision and Deploy to the Cloud
+            <Tab id="publish" value="publish">
+              2. Publish updates
             </Tab>
-            <Tab id="Publish" value="publish">
-              3. Publish to Teams
+            <Tab id="realtimeUpdate" value="realtimeUpdates">
+              3. View realtime updates
             </Tab>
           </TabList>
           <div>
-            {selectedValue === "local" && (
+            {selectedValue === "register" && (
               <div>
-                <EditCode />
-                <AddSSO />
-              </div>
-            )}
-            {selectedValue === "azure" && (
-              <div>
-                <Deploy />
+                <Register />
               </div>
             )}
             {selectedValue === "publish" && (
+              <div>
+                <RealtimeUpdate />
+              </div>
+            )}
+            {selectedValue === "realtimeUpdates" && (
               <div>
                 <Publish />
               </div>

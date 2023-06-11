@@ -1,10 +1,9 @@
 import React from "react";
-import RealtimeUpdate  from "./sample/RealtimeUpdate";
-
+import { Welcome } from "./sample/Welcome";
 export default function Tab() {
   return (
     <div>
-      <RealtimeUpdate />
+      <Welcome  />
     </div>
   );
 }
