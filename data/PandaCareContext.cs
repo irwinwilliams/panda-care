@@ -15,13 +15,13 @@ public partial class PandaCareContext : DbContext
     {
     }
 
-    public virtual DbSet<Child> Children { get; set; }
+    public virtual DbSet<Child>? Children { get; set; }
 
-    public virtual DbSet<ConversationalReference> ConversationalReferences { get; set; }
+    public virtual DbSet<ConversationalReference>? ConversationalReferences { get; set; }
 
-    public virtual DbSet<DailyUpdate> DailyUpdates { get; set; }
+    public virtual DbSet<DailyUpdate>? DailyUpdates { get; set; }
 
-    public virtual DbSet<Parent> Parents { get; set; }
+    public virtual DbSet<Parent>? Parents { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -34,7 +34,6 @@ public partial class PandaCareContext : DbContext
             entity.HasKey(e => e.ChildId).HasName("PK__Children__223925CDAC2B524B");
 
             entity.Property(e => e.ChildId)
-                .ValueGeneratedNever()
                 .HasColumnName("childId");
             entity.Property(e => e.ChildName)
                 .HasMaxLength(100)
@@ -54,7 +53,6 @@ public partial class PandaCareContext : DbContext
             entity.HasKey(e => e.ReferenceId).HasName("PK__Conversa__7B826DDE3965AD9D");
 
             entity.Property(e => e.ReferenceId)
-                .ValueGeneratedNever()
                 .HasColumnName("referenceId");
             entity.Property(e => e.ConversationReference)
                 .IsUnicode(false)
@@ -71,7 +69,6 @@ public partial class PandaCareContext : DbContext
             entity.HasKey(e => e.UpdateId).HasName("PK__DailyUpd__3C748E7AD01BC7C0");
 
             entity.Property(e => e.UpdateId)
-                .ValueGeneratedNever()
                 .HasColumnName("updateId");
             entity.Property(e => e.ChildId).HasColumnName("childId");
             entity.Property(e => e.Comments)
@@ -96,7 +93,6 @@ public partial class PandaCareContext : DbContext
             entity.HasKey(e => e.ParentId).HasName("PK__Parents__90658C989A628808");
 
             entity.Property(e => e.ParentId)
-                .ValueGeneratedNever()
                 .HasColumnName("parentId");
             entity.Property(e => e.Address)
                 .HasMaxLength(255)

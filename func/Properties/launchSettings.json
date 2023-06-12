@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "panda_care_function": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7032",
+      "launchBrowser": false
+    }
+  }
+}

@@ -1,13 +1,84 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+
 import "./reg.css";
 import "./base.css";
 import "./image-upload.css";
 
 const Register: React.FC = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [formData, setFormData] = useState({
+    parentName: "Austin Giraffe",
+    email: "austin@theking.com",
+    phone: "186818281828",
+    address: "Twin Towers, 1 Austin Avenue, Austin, TX 78701",
+    childName: "Sam Giraffe",
+    dateOfBirth: "2020-01-01",
+    medicalConditions: "Good to go!",
+    additionalInfo: "Love all",
+  });
+
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Handle form submission logic here
+
+    try {
+      // Prepare the payload
+      const payload = {
+        parentName: formData.parentName,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.address,
+        childName: formData.childName,
+        dateOfBirth: formData.dateOfBirth,
+        medicalConditions: formData.medicalConditions,
+        additionalInfo: formData.additionalInfo,
+        conversationReference: "ABC123XYZ", // Replace with appropriate value
+      };
+
+      // Make a POST request using 'no-cors' to the Azure function endpoint and display the response
+      var url = "http://localhost:7071/api/PandaSave";
+      //use fetch instead of axios
+      const response = await fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      //parse the respons
+      const data = await response.text();
+      console.log(data);
+
+    
+      // Reset the form
+      // setFormData({
+      //   parentName: "",
+      //   email: "",
+      //   phone: "",
+      //   address: "",
+      //   childName: "",
+      //   dateOfBirth: "",
+      //   medicalConditions: "",
+      //   additionalInfo: "",
+      // });
+
+      // Show a success message or perform any additional actions
+      console.log("Form submitted successfully!");
+    } catch (error) {
+      // Handle any errors
+      console.error("Error submitting form:", error);
+    }
   };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
 
   return (
     <div>
@@ -22,6 +93,8 @@ const Register: React.FC = () => {
             placeholder="Enter your Email"
             className="input"
             name="email"
+            value={formData.email}
+            onChange={handleChange}
             required
           />
         </div>
@@ -35,6 +108,8 @@ const Register: React.FC = () => {
             placeholder="Enter child's name"
             className="input"
             name="childName"
+            value={formData.childName}
+            onChange={handleChange}
             required
           />
         </div>
@@ -43,7 +118,10 @@ const Register: React.FC = () => {
           <label>Date of Birth:</label>
         </div>
         <div className="inputForm">
-          <input type="date" className="input" name="dateOfBirth" required />
+          <input type="date" className="input" name="dateOfBirth" 
+           value={formData.dateOfBirth}
+           onChange={handleChange}
+          required />
         </div>
 
         <div className="flex-column">
@@ -55,6 +133,8 @@ const Register: React.FC = () => {
             placeholder="Enter parent's name"
             className="input"
             name="parentName"
+            value={formData.parentName}
+            onChange={handleChange}
             required
           />
         </div>
@@ -68,6 +148,8 @@ const Register: React.FC = () => {
             placeholder="Enter phone number"
             className="input"
             name="phone"
+            value={formData.phone}
+            onChange={handleChange}
             required
           />
         </div>
@@ -80,6 +162,8 @@ const Register: React.FC = () => {
             className="input"
             placeholder="Enter address"
             name="address"
+            value={formData.address}
+            onChange={handleChange}
             required
           ></textarea>
         </div>
@@ -92,6 +176,8 @@ const Register: React.FC = () => {
             className="input"
             placeholder="Enter medical conditions (if any)"
             name="medicalConditions"
+            value={formData.medicalConditions}
+            onChange={handleChange}
           ></textarea>
         </div>
 
@@ -103,6 +189,8 @@ const Register: React.FC = () => {
             className="input"
             placeholder="Enter additional information"
             name="additionalInfo"
+            value={formData.additionalInfo}
+            onChange={handleChange}
           ></textarea>
         </div>
 
@@ -114,7 +202,6 @@ const Register: React.FC = () => {
           <input
             type="file"
             accept="image/*"
-            required
             id="file-input"
           />
         </label>

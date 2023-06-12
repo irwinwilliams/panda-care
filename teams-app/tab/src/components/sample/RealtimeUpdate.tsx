@@ -18,7 +18,7 @@ export default function RealtimeUpdate() {
     console.log("Sending update");
     // Perform REST API call to send the update with the form data
     const updateData = {
-      childName,
+      childName,  
       timeOfDay,
       updateType,
       comments,
