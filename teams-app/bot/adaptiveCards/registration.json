@@ -1,0 +1,68 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.4",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Register a child today!",
+      "size": "Large",
+      "weight": "Bolder",
+      "horizontalAlignment": "Center"
+    },
+    {
+      "type": "Input.Text",
+      "id": "parentName",
+      "placeholder": "Parent's Name",
+      "label": "Parent's Name",
+      "isRequired": true
+    },
+    {
+      "type": "Input.Text",
+      "id": "email",
+      "placeholder": "Email",
+      "label": "Email",
+      "isRequired": true
+    },
+    {
+      "type": "Input.Text",
+      "id": "phone",
+      "placeholder": "Phone Number",
+      "label": "Phone Number",
+      "isRequired": true
+    },
+    {
+      "type": "Input.Text",
+      "id": "address",
+      "placeholder": "Address",
+      "label": "Address",
+      "isRequired": true
+    },
+    {
+      "type": "Input.Text",
+      "id": "childName",
+      "placeholder": "Child's Name",
+      "label": "Child's Name",
+      "isRequired": true
+    },
+    {
+      "type": "Input.Date",
+      "id": "dateOfBirth",
+      "label": "Date of Birth",
+      "isRequired": true
+    },
+    {
+      "type": "Input.Text",
+      "id": "medicalConditions",
+      "placeholder": "Medical Conditions (if any)",
+      "label": "Medical Conditions (if any)"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Execute",
+      "title": "Register 🐼",
+      "verb": "register",
+      "fallback": "Action.Submit"
+    }
+  ]
+}

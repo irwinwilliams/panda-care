@@ -9,10 +9,22 @@ import {
 } from "botbuilder";
 import rawWelcomeCard from "./adaptiveCards/welcome.json";
 import rawLearnCard from "./adaptiveCards/learn.json";
+import rawRegistrationCard from "./adaptiveCards/registration.json";
 import { AdaptiveCards } from "@microsoft/adaptivecards-tools";
 
 export interface DataInterface {
   likeCount: number;
+}
+
+export interface RegistrationDataInterface {
+  parentName: string;
+  email: string;
+  phone: string;
+  address: string;
+  childName: string;
+  dateOfBirth: string;
+  medicalConditions: string;
+  conversationReference: string;
 }
 
 export class TeamsBot extends TeamsActivityHandler {
@@ -26,6 +38,7 @@ export class TeamsBot extends TeamsActivityHandler {
     this.conversationReferences = conversationReferences;
     this.likeCountObj = { likeCount: 0 };
 
+    
     this.onMessage(async (context, next) => {
       console.log("Running with Message Activity.");
       this.addConversationReference(context.activity);
@@ -47,6 +60,11 @@ export class TeamsBot extends TeamsActivityHandler {
         case "learn": {
           this.likeCountObj.likeCount = 0;
           const card = AdaptiveCards.declare<DataInterface>(rawLearnCard).render(this.likeCountObj);
+          await context.sendActivity({ attachments: [CardFactory.adaptiveCard(card)] });
+          break;
+        }
+        case "register": {
+          const card = AdaptiveCards.declareWithoutData(rawRegistrationCard).render();
           await context.sendActivity({ attachments: [CardFactory.adaptiveCard(card)] });
           break;
         }
@@ -81,6 +99,29 @@ export class TeamsBot extends TeamsActivityHandler {
     context: TurnContext,
     invokeValue: AdaptiveCardInvokeValue
   ): Promise<AdaptiveCardInvokeResponse> {
+    if (invokeValue.action.verb === "register") {
+      var payload = invokeValue.action.data as unknown as RegistrationDataInterface;
+      payload.conversationReference = JSON.stringify(this.conversationReferences[context.activity.conversation.id]);
+      console.log(JSON.stringify(payload));
+
+      var url = "http://localhost:7071/api/PandaSave";
+      //use fetch instead of axios
+      const response = await fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      //parse the respons
+      const data = await response.text();
+      console.log(data);
+      //send the response back to the user
+      await context.sendActivity(data);
+      return { statusCode: 200, type: undefined, value: undefined };
+    }
+
     // The verb "userlike" is sent from the Adaptive Card defined in adaptiveCards/learn.json
     if (invokeValue.action.verb === "userlike") {
       this.likeCountObj.likeCount++;

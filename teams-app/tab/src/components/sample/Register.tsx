@@ -35,6 +35,12 @@ const Register: React.FC = () => {
         conversationReference: "ABC123XYZ", // Replace with appropriate value
       };
 
+      //don't send to db immediately, for one main reason
+      //- you don't have a conversation reference.
+      //the need to get such a reference changes the flow in a beneficial way
+      //since you have to send the data back down to the parent to confirm and with that confirmation, 
+      //you'll get the conversation reference.
+
       // Make a POST request using 'no-cors' to the Azure function endpoint and display the response
       var url = "http://localhost:7071/api/PandaSave";
       //use fetch instead of axios

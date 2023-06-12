@@ -20,6 +20,7 @@ import {
   Activity,
 } from "botbuilder";
 import rawUpdateCard from "./adaptiveCards/realtime-update.json";
+import rawURegistrationCard from "./adaptiveCards/registration.json";
 import { AdaptiveCards } from "@microsoft/adaptivecards-tools";
 
 
@@ -102,6 +103,19 @@ server.get("/api/notify", async (req, res) => {
   res.write("<html><body><h1>Proactive messages have been sent.</h1></body></html>");
   res.end();
 });
+
+
+
+//listen for notifications about registration and send back a card confirming registration
+server.post("/api/registration", async (req, res) => {
+  console.log("registration");
+  //extract realtimedata from request body
+  var registrationData = JSON.parse(req.body);
+  console.log(registrationData);
+  //const card = AdaptiveCards.declare<RegistrationDataInterface>(rawURegistrationCard).render(registrationData);
+
+});
+
 
 export interface RealtimeUpdateDataInterface {
   childName: string;

@@ -59,9 +59,14 @@ namespace func
                 _context.ConversationalReferences.Add(conversationalReference);
 
                 await _context.SaveChangesAsync();
+
+                parent.Children.Add(child);
+                parent.ConversationalReferences.Add(conversationalReference);
+
+                await _context.SaveChangesAsync();
                 response = req.CreateResponse(HttpStatusCode.OK);
                 response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
-                response.WriteString("Saved!");
+                response.WriteString("Registered!");
 
             }
             catch (System.Exception ex)
