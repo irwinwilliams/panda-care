@@ -48,9 +48,6 @@ export default function RealtimeUpdate() {
   return (
     <div className="welcome page">
       <div className="narrow page-padding">
-        <Image src="hello.png" />
-        <h1 className="center">Hi there!</h1>
-
         <div className="tabList">
           <div>
               <div>

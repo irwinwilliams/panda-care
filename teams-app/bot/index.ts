@@ -92,6 +92,7 @@ server.post("/api/messages", async (req, res) => {
 // Listen for incoming notifications and send proactive messages to users.
 server.get("/api/notify", async (req, res) => {
   console.log("notify");
+  //find the conversation reference for the user via the name of the child and the parent
   for (const conversationReference of Object.values(conversationReferences)) {
     await adapter.continueConversationAsync(config.botId, conversationReference, async (context) => {
       await context.sendActivity('proactive hello');
