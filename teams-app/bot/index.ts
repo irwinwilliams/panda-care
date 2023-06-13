@@ -2,7 +2,6 @@
 import * as restify from "restify";
 import cors from 'cors';
 
-
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
 import {
@@ -72,6 +71,7 @@ const bot = new TeamsBot(conversationReferences);
 
 // Create HTTP server.
 const server = restify.createServer();
+
 server.use(restify.plugins.bodyParser());
 
 server.use(cors({'origins': ['*']}));
@@ -124,23 +124,31 @@ export interface RealtimeUpdateDataInterface {
   updateType: string;
   comments: string; 
   parentName: string;
+  conversationReference: any;
 }
 
 // Listen for incoming notifications and send proactive messages to users.
 server.post("/api/notify", async (req, res) => {
   console.log("notify");
+
   //extract realtimedata from request body
   var realtimeUpdateData = JSON.parse(req.body);
+  realtimeUpdateData.conversationReference = JSON.parse(realtimeUpdateData.conversationReference);
 
   //{"childName":"Mel","timeOfDay":"10:00 am","updateType":"Nutrition","comments":"Ate all fruits and vegetables","parentName":"Jimmy"}
   console.log(realtimeUpdateData);
+  await adapter.continueConversationAsync(config.botId, realtimeUpdateData.conversationReference, async (context) => {
+        const card = AdaptiveCards.declare<RealtimeUpdateDataInterface>(rawUpdateCard).render(realtimeUpdateData);
+        await context.sendActivity({ attachments: [CardFactory.adaptiveCard(card)] });
+  });
 
-  for (const conversationReference of Object.values(conversationReferences)) {
-    await adapter.continueConversationAsync(config.botId, conversationReference, async (context) => {
-          const card = AdaptiveCards.declare<RealtimeUpdateDataInterface>(rawUpdateCard).render(realtimeUpdateData);
-          await context.sendActivity({ attachments: [CardFactory.adaptiveCard(card)] });
-    });
-  }
+
+  // for (const conversationReference of Object.values(conversationReferences)) {
+  //   await adapter.continueConversationAsync(config.botId, conversationReference, async (context) => {
+  //         const card = AdaptiveCards.declare<RealtimeUpdateDataInterface>(rawUpdateCard).render(realtimeUpdateData);
+  //         await context.sendActivity({ attachments: [CardFactory.adaptiveCard(card)] });
+  //   });
+  // }
 
   res.setHeader("Content-Type", "text/html");
   res.writeHead(200);

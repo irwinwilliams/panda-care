@@ -26,8 +26,6 @@ export function Welcome() {
   return (
     <div className="welcome page">
       <div className="narrow page-padding">
-        <Image src="hello.png" />
-        <h1 className="center">Congratulations!</h1>
         <div className="tabList">
           <TabList selectedValue={selectedValue} onTabSelect={onTabSelect}>
             <Tab id="register" value="register">

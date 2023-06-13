@@ -22,7 +22,7 @@ namespace func
         }
 
         [Function("PandaCareFamBam")]
-        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
+        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
         {
             _logger.LogInformation("FamBam: List a part.");
             //create an anonymous object based on the data model
@@ -36,10 +36,11 @@ namespace func
             //convert the anonymous object to json
             var json = JsonConvert.SerializeObject(children);
             //return a json object
-            
             var response = req.CreateResponse(HttpStatusCode.OK);
-            response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-            response.WriteString(json);
+            //response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            //write the json to the response
+            await response.WriteAsJsonAsync(json);
+
             return response;
         }
     }
