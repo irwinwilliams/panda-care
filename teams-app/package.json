@@ -24,6 +24,7 @@
         "@mui/material": "^5.13.4",
         "concurrently": "^7.6.0",
         "cors": "^2.8.5",
+        "powerbi-client-react": "^1.4.0",
         "restify-cors-middleware": "^1.1.1"
     }
 }
