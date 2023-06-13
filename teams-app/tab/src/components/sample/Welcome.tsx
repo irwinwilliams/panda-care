@@ -18,28 +18,26 @@ import Reports  from "./Reports";
 
 export function Welcome() {
   
-  const [selectedValue, setSelectedValue] = useState<TabValue>("realtimeUpdate");
+  const [selectedValue, setSelectedValue] = useState<TabValue>("publish");
 
   const onTabSelect = (event: SelectTabEvent, data: SelectTabData) => {
     setSelectedValue(data.value);
   };
 
   return (
-    <div className="welcome page">
-      <div className="narrow page-padding">
-        <Image src="hello.png" />
-        <h1 className="center">Congratulations!</h1>
+    <div className="welcome page translucent">
+      {/* <div className="narrow page-padding"> */}
         <div className="tabList">
           <TabList selectedValue={selectedValue} onTabSelect={onTabSelect}>
-            <Tab id="register" value="register">
+            {/* <Tab id="register" value="register">
               1. Register child
-            </Tab>
+            </Tab> */}
             <Tab id="publish" value="publish">
-              2. Publish updates
+              Publish updates
             </Tab>
-            <Tab id="realtimeUpdate" value="realtimeUpdates">
+            {/* <Tab id="realtimeUpdate" value="realtimeUpdates">
               3. View realtime updates
-            </Tab>
+            </Tab> */}
             <Tab id="reports" value="reports">
               4. View Reports
             </Tab>
@@ -67,7 +65,7 @@ export function Welcome() {
             )}
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 }

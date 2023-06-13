@@ -46,8 +46,8 @@
                             "description": "Resend welcome card of this Bot"
                         },
                         {
-                            "title": "learn",
-                            "description": "Learn about Adaptive Card and Bot Command"
+                            "title": "register",
+                            "description": "Register your child to receive updates"
                         }
                     ]
                 }
