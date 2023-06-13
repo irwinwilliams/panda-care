@@ -33,13 +33,13 @@ export function Welcome() {
               1. Register child
             </Tab> */}
             <Tab id="publish" value="publish">
-              Publish updates
+              Updates
             </Tab>
             {/* <Tab id="realtimeUpdate" value="realtimeUpdates">
               3. View realtime updates
             </Tab> */}
             <Tab id="reports" value="reports">
-              4. View Reports
+              Reports
             </Tab>
           </TabList>
           <div>
