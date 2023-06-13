@@ -82,10 +82,7 @@ export default function RealtimeUpdate() {
   };
 
   return (
-    <div className="welcome page">
-      <div className="narrow page-padding">
-        <div className="tabList">
-          <div>
+    <div>
               <div>
                 <h2>Send Daycare Update</h2>
                 <form>
@@ -137,8 +134,5 @@ export default function RealtimeUpdate() {
                 </form>
               </div>
           </div>
-        </div>
-      </div>
-    </div>
   );
 }

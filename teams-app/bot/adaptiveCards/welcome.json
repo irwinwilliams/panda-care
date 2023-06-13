@@ -1,30 +1,33 @@
 {
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "type": "AdaptiveCard",
+  "version": "1.4",
   "body": [
     {
       "type": "TextBlock",
-      "size": "Medium",
-      "weight": "Bolder",
-      "text": "Your Hello World Bot is Running"
+      "text": "Welcome to Panda Care App!",
+      "size": "Large",
+      "weight": "Bolder"
     },
     {
       "type": "TextBlock",
-      "text": "Congratulations! Your hello world bot is running. Click the documentation below to learn more about Bots and the Teams Toolkit.",
+      "text": "Thank you for choosing Panda Care to provide insights about your child at daycare.",
       "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "To get started, please register:"
     }
   ],
   "actions": [
     {
-      "type": "Action.OpenUrl",
-      "title": "Bot Framework Docs",
-      "url": "https://docs.microsoft.com/en-us/azure/bot-service/?view=azure-bot-service-4.0"
-    },
-    {
-      "type": "Action.OpenUrl",
-      "title": "Teams Toolkit Docs",
-      "url": "https://aka.ms/teamsfx-docs"
+      "type": "Action.Submit",
+      "title": "Register Child",
+      "verb": "send-registration-form",
+      "value": { "register": true },
+      "data": {
+        "form": "register"
+      }
     }
-  ],
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "version": "1.4"
+  ]
 }

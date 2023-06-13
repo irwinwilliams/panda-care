@@ -1,45 +1,90 @@
 {
-  "type": "AdaptiveCard",
-  "body": [
-    {
-      "type": "TextBlock",
-      "size": "Medium",
-      "weight": "Bolder",
-      "text": "Learn Adaptive Card and Commands"
-    },
-    {
-      "type": "TextBlock",
-      "text": "Now you have triggered a command that sends this card! Go to documentations to learn more about Adaptive Card and Commands in Teams Bot. Click on \"I like this\" below if you think this is helpful.",
-      "wrap": true
-    },
-    {
-      "type": "FactSet",
-      "facts": [
-        {
-          "title": "Like Count:",
-          "value": "${likeCount}"
-        }
-      ]
+  "_respondedRef": {
+    "responded": false
+  },
+  "_turnState": {
+    "turn": {
+      "locale": "en-US"
     }
-  ],
-  "actions": [
-    {
-      "type": "Action.Execute",
-      "title": "I Like This!",
-      "verb": "userlike",
-      "fallback": "Action.Submit"
+  },
+  "_onSendActivities": [],
+  "_onUpdateActivity": [],
+  "_onDeleteActivity": [],
+  "_turn": "turn",
+  "_locale": "locale",
+  "bufferedReplyActivities": [],
+  "_adapter": {
+    "middleware": {
+      "middleware": []
     },
-    {
-      "type": "Action.OpenUrl",
-      "title": "Adaptive Card Docs",
-      "url": "https://docs.microsoft.com/en-us/adaptive-cards/"
-    },
-    {
-      "type": "Action.OpenUrl",
-      "title": "Bot Command Docs",
-      "url": "https://docs.microsoft.com/en-us/microsoftteams/platform/bots/how-to/create-a-bot-commands-menu?tabs=desktop%2Cdotnet"
+    "botFrameworkAuthentication": {
+      "inner": {
+        "validateAuthority": true,
+        "toChannelFromBotLoginUrl": "https://login.microsoftonline.com/botframework.com",
+        "toChannelFromBotOAuthScope": "https://api.botframework.com",
+        "toBotFromChannelTokenIssuer": "https://api.botframework.com",
+        "oAuthUrl": "https://api.botframework.com",
+        "toBotFromChannelOpenIdMetadataUrl": "https://login.botframework.com/v1/.well-known/openidconfiguration",
+        "toBotFromEmulatorOpenIdMetadataUrl": "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration",
+        "callerId": "urn:botframework:azure",
+        "credentialsFactory": {
+          "name": "ConfigurationServiceClientCredentialFactory",
+          "appId": "bfeb0ccb-64aa-408e-9445-cd5120021798"
+        },
+        "authConfiguration": {
+          "requiredEndorsements": []
+        },
+        "connectorClientOptions": {}
+      }
     }
-  ],
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "version": "1.4"
+  },
+  "_activity": {
+    "type": "message",
+    "timestamp": "2023-06-13T17:28:45.639Z",
+    "localTimestamp": "2023-06-13T17:28:45.639Z",
+    "id": "f:906b268b-e59c-2a4d-3b66-d624d9d6f44b",
+    "channelId": "msteams",
+    "serviceUrl": "https://smba.trafficmanager.net/amer/",
+    "from": {
+      "id": "29:10Kfbf9zdGZrtiq_JcxNJPUUPDNvQTzmCiFcHvHT1TNGQxnW3mqRaGPA8nu0JSnw0bxUAzYA5TSTHaRJN4-Yx7g",
+      "name": "Irwin Williams",
+      "aadObjectId": "f31ab91f-b747-4a99-9dae-9f6eeeeb759c"
+    },
+    "conversation": {
+      "conversationType": "personal",
+      "tenantId": "7af15061-17ce-4b49-a4de-bfae9376602e",
+      "id": "a:1BtY4OWR7K98glm01L8stCL4FnWgeeyvdbBPNV36av4EV9Fm3okbLQKuXXAgz3IaEPKpr-LA5bnq2m_k8dolGXMHXjOQ76yxS1TMZz1tYNfz8WaiGRODlB4urCCZVG9cy"
+    },
+    "recipient": {
+      "id": "28:bfeb0ccb-64aa-408e-9445-cd5120021798",
+      "name": "bot"
+    },
+    "entities": [
+      {
+        "locale": "en-US",
+        "country": "US",
+        "platform": "Web",
+        "timezone": "America/La_Paz",
+        "type": "clientInfo"
+      }
+    ],
+    "channelData": {
+      "tenant": {
+        "id": "7af15061-17ce-4b49-a4de-bfae9376602e"
+      },
+      "source": {
+        "name": "message"
+      },
+      "legacy": {
+        "replyToId": "1:1WPm8JdXXxRtuE76A9ZOAywth1yZjGr54x31anzcEP8c"
+      }
+    },
+    "replyToId": "1686675511138",
+    "value": {},
+    "locale": "en-US",
+    "localTimezone": "America/La_Paz",
+    "rawTimestamp": "2023-06-13T17:28:45.639Z",
+    "rawLocalTimestamp": "2023-06-13T13:28:45.639-04:00",
+    "callerId": "urn:botframework:azure"
+  }
 }
