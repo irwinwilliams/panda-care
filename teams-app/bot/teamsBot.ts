@@ -41,6 +41,8 @@ export class TeamsBot extends TeamsActivityHandler {
     
     this.onMessage(async (context, next) => {
       console.log("Running with Message Activity.");
+      //get adaptive card invoke value
+      
       this.addConversationReference(context.activity);
       //console.log(conversationReferences);
       let txt = context.activity.text;
@@ -48,6 +50,10 @@ export class TeamsBot extends TeamsActivityHandler {
       if (removedMentionText) {
         // Remove the line break
         txt = removedMentionText.toLowerCase().replace(/\n|\r/g, "").trim();
+      }
+
+      if (context.activity.value && JSON.stringify(context.activity.value).indexOf("register") > -1) {
+        txt = "register";
       }
 
       // Trigger command by IM text
@@ -99,7 +105,12 @@ export class TeamsBot extends TeamsActivityHandler {
     context: TurnContext,
     invokeValue: AdaptiveCardInvokeValue
   ): Promise<AdaptiveCardInvokeResponse> {
-    if (invokeValue.action.verb === "register") {
+    console.log(JSON.stringify(invokeValue));
+    if (invokeValue.action.verb === "send-registration-form") {
+      const card = AdaptiveCards.declareWithoutData(rawRegistrationCard).render();
+      await context.sendActivity({ attachments: [CardFactory.adaptiveCard(card)] });
+    }
+    else if (invokeValue.action.verb === "register") {
       var payload = invokeValue.action.data as unknown as RegistrationDataInterface;
       payload.conversationReference = JSON.stringify(this.conversationReferences[context.activity.conversation.id]);
       console.log(JSON.stringify(payload));
@@ -120,10 +131,7 @@ export class TeamsBot extends TeamsActivityHandler {
       //send the response back to the user
       await context.sendActivity(data);
       return { statusCode: 200, type: undefined, value: undefined };
-    }
-
-    // The verb "userlike" is sent from the Adaptive Card defined in adaptiveCards/learn.json
-    if (invokeValue.action.verb === "userlike") {
+    } else if (invokeValue.action.verb === "userlike") {
       this.likeCountObj.likeCount++;
       const card = AdaptiveCards.declare<DataInterface>(rawLearnCard).render(this.likeCountObj);
       await context.updateActivity({
