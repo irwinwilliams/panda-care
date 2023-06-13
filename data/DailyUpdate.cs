@@ -12,6 +12,8 @@ public partial class DailyUpdate
 
     public int? ChildId { get; set; }
 
+    public DateTime? Date { get; set; }
+
     public string? TimeOfDay { get; set; }
 
     public string? UpdateType { get; set; }
