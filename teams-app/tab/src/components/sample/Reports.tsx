@@ -10,12 +10,12 @@ const Reports: React.FC = () =>  {
 	
 	useEffect(() => {
 		const fetchAccessToken = async () => {
+		
+
 		  const appId = 'f5cc3339-4a6f-4a8c-ab37-43d7ed8d45ad';
 		  const tenantId = '74f2dfde-2e88-43a9-a501-ff6faa44578d';
 		  const authority = `https://login.microsoftonline.com/${tenantId}`;
 		  const scopes = ['https://analysis.windows.net/powerbi/api/Dashboard.Read.All'];
-		  const username = 'grayadmin@ykdjz.onmicrosoft.com';
-		  const password = 'ekBJhxTXvqK2teb3vTQ!';
 
 		  const msalConfig = {
 			auth: {
