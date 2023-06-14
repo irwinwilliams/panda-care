@@ -1,22 +1,59 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect, useRef } from "react";
 import "./Reports.css";
 import { PowerBIEmbed } from 'powerbi-client-react';
-import { models } from 'powerbi-client'
-export default function Reports() {
+import { models } from 'powerbi-client';
+import { PublicClientApplication } from '@azure/msal-browser';
 
 
+const Reports: React.FC = () =>  {
+	const [accessToken, setAccessToken] = useState<string | "">("");
+	
+	useEffect(() => {
+		const fetchAccessToken = async () => {
+		  const appId = 'f5cc3339-4a6f-4a8c-ab37-43d7ed8d45ad';
+		  const tenantId = '74f2dfde-2e88-43a9-a501-ff6faa44578d';
+		  const authority = `https://login.microsoftonline.com/${tenantId}`;
+		  const scopes = ['https://analysis.windows.net/powerbi/api/Dashboard.Read.All'];
+		  const username = 'grayadmin@ykdjz.onmicrosoft.com';
+		  const password = 'ekBJhxTXvqK2teb3vTQ!';
 
-  return (
-    <div className="welcome page">
-      	<PowerBIEmbed
-	embedConfig = {{
-		type: 'report',   // Supported types: report, dashboard, tile, visual, qna and paginated report
-		id: 'c035facd-ed07-4cad-b7b6-b5275e942483',
-		embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=c035facd-ed07-4cad-b7b6-b5275e942483&groupId=955106fa-c6f3-436e-bed0-3b561c5fa7bb&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLUVBU1QtQS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJtb2Rlcm5FbWJlZCI6dHJ1ZSwidXNhZ2VNZXRyaWNzVk5leHQiOnRydWV9fQ%3d%3d',
-		accessToken: 'H4sIAAAAAAAEAB3Ut46EBgBF0X_ZFksMGSy5gCHnnDpyzhnL_-61-1sd6b2_f8zk6ack__nzB7h9hl5KunMqIrKcc1TIWDLV88qriNH7CFeiVnuLZjJAmYHgD4pWvRHGX9KTmLQdKBuO0vX-CF_TCTlZ6HhO5saALNmTvD4tkgYMBjC0PGqQxRCsrhkmAHtZpg_0U6u9P9jH3B-ykNCY3DPEuxmyFeyq9M2_ktyGoxvNsLt5DaKmg0Jg7uF0VN7v80I6QqlKdB7AQMXdiqGCeQetZAwky4U1UTv048K-VhJqBqjstcAvhZRHNC4Twi3nI2XYQG9600ua1HsGw9ZMT5zJCNBJCC_dT51h1YyMl_GCFoRGSRxGdzaNRxbCArH6jm2oPjrLEyLrPk5uES1dnyrVY5_tE7_CyQFz5J6Ao7jdi6EitVfCo3DBXMsdtzNJIN5ak-oSUvRCnoYndH1upAGXmAyVqnAwmyZAE5ph8_Zq0AbGfeNIOnBD7qeM-YGe6SPzEQzc_P1bUkcHpkAfLkCXMSlY7AOvHa7I9IaP72Gkkd5dGUYH2gEO3EqPeSYpMuCzSZVbPVSoJZE5ofjlZRLcSxNrz8dhVsSk23MIyauXU9yjG1ksRU8Jc9hO7vI-wOMV81zAtGTPaENhd_gjOmKP1voZNNaUmZoM-Fi-nGx64uyR1bib2qf7HjkF3rdXDtPr9E6sFHHx-eS6OYhpHuK7migvDok0bFFxLXFVYlvYu3W1RXtR7kTrmGDzcZUXo1lHuvpkVIZDz7eHkpOuXejTK1I6h_F3u0TVBmjRMno3qrJ7THJGiPo6AABrJ-lDh2YGfDxJxXHrl-KadZbsKbOj6IE2OW8a-41Sx0e91LudRmdbIhiiEeIoRv-sV36BsyAVUtWmqgr__PHzXZ95n5Ti-Z1TDq7KF2H19GOn9Z6E1bmDkOM01anZeL_cU7rzNsFD9E15_bq0Iw2FT-mMOG6U5ptOKSrv6pcXY1F3z1qWE4gg82KJFl3d8aiiWqBK4I3_nGWTkspWiKv-zaDmRsvj6S0S9KDX4MTcIqZjiWdKPqkA-IgFm-2Jc8HeLPh03jEvokFe1ZhXBHJoQ9Msfd1ith9-iOpj3kAju9cpnZGNVI920wBfXx8tnpAHXWTpfCtv81EO1n3c6qXpWW_sGQBp7aTY9XLFud6oW8O_oR7Ow7o__nCWoXW686mixSAyXMyOz3iD4E1IbB02gB4mECvzI8Jrk0m2S3AUwiAWJFBJlna1e3z99dd_zM9cF6vk_yonojBthNKZWnLRmqnY1JE_1f_VL_WY7Mda_GbuAEL7cYHIBDwOE8jxVx11L-Xs0Waly8S-lYp9vArpzh6HLN1ZnvYwJOYT7Zl3kAGTaj4hALlfqD62niuzWNd7sHYR1CViK_CG-zYft4ZaO093N1AIFPfb21_hd6VbijSHXGSd-Y5mhWQg7iQULxHtzrGMmPI9T8JrXL0hxLd0bx3RihSqjfrgFFjU6skilpGnGWdrIF1l7XG01H88WhJ6m3aqARMOBR-4mqZzaytKpHIR9fi9a57xqvYwF3I_PnSIDVXgtuGTW7kl8uAS2Oq-XVwiluj5mZWVwLNb2L-fJXQGx7Ae837kPJ84UJFYbXt7FhI_bY8omBBqEgea7VZGkvUf8z__AuWUVUtCBgAA.eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLUVBU1QtQS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZXhwIjoxNjg2NjkxMTcxLCJhbGxvd0FjY2Vzc092ZXJQdWJsaWNJbnRlcm5ldCI6dHJ1ZX0=',    // Keep as empty string, null or undefined
-		tokenType: models.TokenType.Embed
-	}}
-/>
-    </div>
-  );
-}
+		  const msalConfig = {
+			auth: {
+			  clientId: appId,
+			  authority: authority,
+			  redirectUri: window.location.origin,
+			},
+		  };
+	
+		  const msalInstance = new PublicClientApplication(msalConfig);
+	
+		  try {
+			const response = await msalInstance.loginPopup({
+
+				scopes: scopes,
+			});
+	
+			if (response && response.accessToken) {
+			  setAccessToken(response.accessToken);
+			  console.log(response.accessToken);
+			}
+		  } catch (error) {
+			// Handle token acquisition failure
+			console.error('Failed to acquire access token:', error);
+		  }
+		};
+	
+		fetchAccessToken();
+	  }, []);
+	  
+	return (<PowerBIEmbed
+		embedConfig = {{
+			type: 'report',   // Supported types: report, dashboard, tile, visual, qna and paginated report
+			id: 'c035facd-ed07-4cad-b7b6-b5275e942483',
+			embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=c035facd-ed07-4cad-b7b6-b5275e942483&groupId=955106fa-c6f3-436e-bed0-3b561c5fa7bb&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLUVBU1QtQS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJtb2Rlcm5FbWJlZCI6dHJ1ZSwidXNhZ2VNZXRyaWNzVk5leHQiOnRydWV9fQ%3d%3d',
+			accessToken: accessToken,    // Keep as empty string, null or undefined
+			tokenType: models.TokenType.Aad
+		}}
+	/>)	
+};
+export default Reports;

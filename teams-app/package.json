@@ -18,6 +18,8 @@
         "build": "concurrently \"npm run build:tab\" \"npm run build:bot\""
     },
     "dependencies": {
+        "@azure/msal-browser": "^2.37.1",
+        "@azure/msal-node": "^1.17.3",
         "@emotion/react": "^11.11.1",
         "@emotion/styled": "^11.11.0",
         "@fluentui/react": "^8.110.2",
