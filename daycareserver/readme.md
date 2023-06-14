@@ -16,3 +16,7 @@ To run:
 1. node server.js
    OR
 2. npm start
+
+# Configuaration
+
+Note: Copy config-template.js and paste into a new file called config.js. Place your environment specific configs in the config.js file. Save the file. This is needed to get the app to run.
