@@ -84,7 +84,7 @@ export default function RealtimeUpdate() {
   return (
     <div>
       <div>
-        <h2>Send Daycare Update</h2>
+        <h2>🐼 Send Daycare Update 🐼</h2>
         <form className="form-container">
           <Dropdown
             required
