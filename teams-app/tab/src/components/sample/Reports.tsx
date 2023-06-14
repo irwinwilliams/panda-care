@@ -9,35 +9,35 @@ const Reports: React.FC = () =>  {
 	const [accessToken, setAccessToken] = useState<string | "">("");
 	
 	useEffect(() => {
-		const fetchAccessToken = async () => {
+	const fetchAccessToken = async () => {
 		
+		const appId = '04684327-4cd5-4499-b5f3-613e57cf4d96';
+		const tenantId = '7af15061-17ce-4b49-a4de-bfae9376602e';
+		const authority = `https://login.microsoftonline.com/${tenantId}`;
+		const scopes = ['https://analysis.windows.net/powerbi/api/Dashboard.Read.All'];
+		  
 
-		  const appId = 'f5cc3339-4a6f-4a8c-ab37-43d7ed8d45ad';
-		  const tenantId = '74f2dfde-2e88-43a9-a501-ff6faa44578d';
-		  const authority = `https://login.microsoftonline.com/${tenantId}`;
-		  const scopes = ['https://analysis.windows.net/powerbi/api/Dashboard.Read.All'];
-
-		  const msalConfig = {
+		const msalConfig = {
 			auth: {
 			  clientId: appId,
 			  authority: authority,
 			  redirectUri: window.location.origin,
 			},
-		  };
+		};
 	
-		  const msalInstance = new PublicClientApplication(msalConfig);
+		const msalInstance = new PublicClientApplication(msalConfig);
 	
-		  try {
+		try {
 			const response = await msalInstance.loginPopup({
 
-				scopes: scopes,
-			});
+			scopes: scopes,
+		});
 	
-			if (response && response.accessToken) {
-			  setAccessToken(response.accessToken);
-			  console.log(response.accessToken);
-			}
-		  } catch (error) {
+		if (response && response.accessToken) {
+			setAccessToken(response.accessToken);
+			console.log(response.accessToken);
+		}
+		} catch (error) {
 			// Handle token acquisition failure
 			console.error('Failed to acquire access token:', error);
 		  }
@@ -49,8 +49,8 @@ const Reports: React.FC = () =>  {
 	return (<PowerBIEmbed
 		embedConfig = {{
 			type: 'report',   // Supported types: report, dashboard, tile, visual, qna and paginated report
-			id: 'c035facd-ed07-4cad-b7b6-b5275e942483',
-			embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=c035facd-ed07-4cad-b7b6-b5275e942483&groupId=955106fa-c6f3-436e-bed0-3b561c5fa7bb&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLUVBU1QtQS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJtb2Rlcm5FbWJlZCI6dHJ1ZSwidXNhZ2VNZXRyaWNzVk5leHQiOnRydWV9fQ%3d%3d',
+			id: '37854ffb-688c-4aef-8a28-d3e2fb824479',
+			embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=37854ffb-688c-4aef-8a28-d3e2fb824479&groupId=6d6de5cc-1b3a-40eb-9f64-a8ccc70fc5e9&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLUVBU1QtQS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJtb2Rlcm5FbWJlZCI6dHJ1ZSwidXNhZ2VNZXRyaWNzVk5leHQiOnRydWV9fQ%3d%3d',
 			accessToken: accessToken,    // Keep as empty string, null or undefined
 			tokenType: models.TokenType.Aad
 		}}
