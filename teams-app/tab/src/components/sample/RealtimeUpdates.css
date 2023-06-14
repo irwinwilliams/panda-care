@@ -2,14 +2,50 @@
   padding: 20px;
 }
 
+h2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#ms-Dropdown-title, .ms-TextField-fieldGroup{
+  border-radius: 7px;
+}
+
 .form-container {
-  margin-top: 20px;
-  width: 300px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  opacity: 92%;
+  gap: 10px;
+  background-color: #ffffff;
+  padding: 30px;
+  width: 450px;
+  border-radius: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.form button {
+  align-self: flex-end;
+}
+
+button {
+  background-color: #151717;
+  border: none;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 10px;
+  height: 50px;
+  width: 50%;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto !important;
+  border-radius: 7px !important;
+}
+
+form input {
+  border-radius: 7px !important;
 }
 
 .narrow {

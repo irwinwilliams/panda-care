@@ -28,7 +28,7 @@ export default function RealtimeUpdate() {
   useEffect(() => {
     console.log("Fetching parent-child pairs");
     // Fetch parent-child name pairs with conversation IDs from the Azure function
-    fetch("https://pandapandapanda.azurewebsites.net/api/PandaCareFamBam?code=u0uwuzjwQ9bSDoVdGlg9Z748y5A12qd7VLyag-2T--mhAzFuqIaqlw==",{
+    fetch("https://pandapandapanda.azurewebsites.net/api/PandaCareFamBam?code=u0uwuzjwQ9bSDoVdGlg9Z748y5A12qd7VLyag-2T--mhAzFuqIaqlw==", {
       method: "GET",
     })
       .then((response) => response.json())
@@ -48,12 +48,12 @@ export default function RealtimeUpdate() {
     var refIntermediary = parentChildPairs.find((pair: any) => pair.ParentName === parentName && pair.ChildName[0] === childName);
     //extract conversation reference from intermediary
     //cast intermediary as any to avoid type errors
-    var convRef = (refIntermediary as any).ConversationReference[0]; 
+    var convRef = (refIntermediary as any).ConversationReference[0];
     console.log(convRef);
     setConversationReference(convRef);
     // Perform REST API call to send the update with the form data
     const updateData = {
-      childName,  
+      childName,
       timeOfDay,
       updateType,
       comments,
@@ -83,56 +83,55 @@ export default function RealtimeUpdate() {
 
   return (
     <div>
-              <div>
-                <h2>Send Daycare Update</h2>
-                <form>
-                <Dropdown
-                  required  
-                  label="Childs's Name"
-                  selectedKey={parentName}
-                  options={parentChildPairs.map((pair: any) => ({
-                    key: pair.ParentName,
-                    text: pair.ChildName[0],
-                    conv: pair.ConversationReference[0]
-                  }))}
-                  onChange={(_event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption) =>
-                    {
-                    setParentName(option?.key as string || "");
-                    setChildName(option?.text as string || "");
-                    }
-                  }
-                />
+      <div>
+        <h2>Send Daycare Update</h2>
+        <form className="form-container">
+          <Dropdown
+            required
+            label="Childs's Name"
+            selectedKey={parentName}
+            options={parentChildPairs.map((pair: any) => ({
+              key: pair.ParentName,
+              text: pair.ChildName[0],
+              conv: pair.ConversationReference[0]
+            }))}
+            onChange={(_event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption) => {
+              setParentName(option?.key as string || "");
+              setChildName(option?.text as string || "");
+            }
+            }
+          />
 
-                  <TimePicker
-                    label="Time of Day"
-                    value={selectedTime}
-                    onChange={(event: FormEvent<IComboBox>, time: Date) =>{
-                      setTimeOfDay(time || undefined);
-                    }}
-                  />
+          <TimePicker
+            label="Time of Day"
+            value={selectedTime}
+            onChange={(event: FormEvent<IComboBox>, time: Date) => {
+              setTimeOfDay(time || undefined);
+            }}
+          />
 
-                  <TextField
-                    required
-                    label="Update Type"
-                    value={updateType}
-                    onChange={(_event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?:string) => setUpdateType(newValue || "")}
-                  />
-                  <TextField
-                    required
-                    label="Update"
-                    value={comments}
-                    onChange={(_event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?:string) => setComments(newValue || "")}
-                  />
+          <TextField
+            required
+            label="Update Type"
+            value={updateType}
+            onChange={(_event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => setUpdateType(newValue || "")}
+          />
+          <TextField
+            required
+            label="Update"
+            value={comments}
+            onChange={(_event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => setComments(newValue || "")}
+          />
 
-                  
-                  
-                  <PrimaryButton onClick={handleSendUpdate}
-                    color="primary"
-                    style={{ marginTop: "16px" }}>
-                    Send Update
-                  </PrimaryButton>
-                </form>
-              </div>
-          </div>
+
+
+          <PrimaryButton onClick={handleSendUpdate}
+            color="primary"
+            style={{ marginTop: "16px" }}>
+            Send Update
+          </PrimaryButton>
+        </form>
+      </div>
+    </div>
   );
 }
