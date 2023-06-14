@@ -15,6 +15,7 @@ import { AddSSO } from "./AddSSO";
 import RealtimeUpdate  from "./RealtimeUpdate";
 import Register  from "./Register";
 import Reports  from "./Reports";
+import Assistant from "./Assistant";
 
 export function Welcome() {
   
@@ -41,6 +42,9 @@ export function Welcome() {
             <Tab id="reports" value="reports">
               Reports
             </Tab>
+            <Tab id="assistant" value="assistant">
+              Child Care Assistant
+            </Tab>
           </TabList>
           <div>
             {selectedValue === "register" && (
@@ -61,6 +65,11 @@ export function Welcome() {
             {selectedValue === "reports" && (
               <div>
                 <Reports />
+              </div>
+            )}
+            {selectedValue === "assistant" && (
+              <div>
+                <Assistant />
               </div>
             )}
           </div>
