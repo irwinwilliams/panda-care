@@ -43,7 +43,7 @@ export function Welcome() {
               Reports
             </Tab>
             <Tab id="assistant" value="assistant">
-              Child Care Assistant
+              Daycare Assistant
             </Tab>
           </TabList>
           <div>
