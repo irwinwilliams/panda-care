@@ -88,25 +88,6 @@ server.post("/api/messages", async (req, res) => {
   });
 });
 
-
-// Listen for incoming notifications and send proactive messages to users.
-server.get("/api/notify", async (req, res) => {
-  console.log("notify");
-  //find the conversation reference for the user via the name of the child and the parent
-  for (const conversationReference of Object.values(conversationReferences)) {
-    await adapter.continueConversationAsync(config.botId, conversationReference, async (context) => {
-      await context.sendActivity('proactive hello');
-    });
-  }
-
-  res.setHeader("Content-Type", "text/html");
-  res.writeHead(200);
-  res.write("<html><body><h1>Proactive messages have been sent.</h1></body></html>");
-  res.end();
-});
-
-
-
 //listen for notifications about registration and send back a card confirming registration
 server.post("/api/registration", async (req, res) => {
   console.log("registration");
