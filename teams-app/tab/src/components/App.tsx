@@ -8,6 +8,8 @@ import Tab from "./Tab";
 import TabConfig from "./TabConfig";
 import { useTeams } from "@microsoft/teamsfx-react";
 import { app } from "@microsoft/teams-js";
+import { useTeamsUserCredential } from "@microsoft/teamsfx-react";
+import { TeamsFxContext } from "../internal/context";
 
 /**
  * The main app which handles the initialization and routing
@@ -15,6 +17,7 @@ import { app } from "@microsoft/teams-js";
  */
 export default function App() {
   const { theme } = useTeams({})[0];
+  const themeString: string =  "light";
   useEffect(() => {
     app.initialize().then(() => {
       // Hide the loading indicator.
@@ -22,6 +25,7 @@ export default function App() {
     });
   }, []);
   return (
+    <TeamsFxContext.Provider value={{ themeString}}>
     <FluentProvider
       theme={
         theme || {
@@ -41,5 +45,6 @@ export default function App() {
         </Routes>
       </Router>
     </FluentProvider>
+      </TeamsFxContext.Provider>
   );
 }

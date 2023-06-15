@@ -5,7 +5,7 @@ env/.env.*.user
 .localConfigs
 build
 appPackage/build
-
+/devTools
 # dependencies
 /node_modules
 /tab/node_modules

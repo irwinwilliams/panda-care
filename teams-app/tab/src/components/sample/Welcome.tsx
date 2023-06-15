@@ -10,7 +10,7 @@ import {
 import "./Welcome.css";
 import { EditCode } from "./EditCode";
 import { Deploy } from "./Deploy";
-import { Publish } from "./Publish";
+import NoticeBoard  from "../../dashboards/NoticeBoard";
 import { AddSSO } from "./AddSSO";
 import RealtimeUpdate  from "./RealtimeUpdate";
 import Register  from "./Register";
@@ -45,6 +45,9 @@ export function Welcome() {
             <Tab id="assistant" value="assistant">
               Daycare Assistant
             </Tab>
+            <Tab id="noticeboard" value="noticeboard">
+              Notice board
+            </Tab>
           </TabList>
           <div>
             {selectedValue === "register" && (
@@ -57,9 +60,9 @@ export function Welcome() {
                 <RealtimeUpdate />
               </div>
             )}
-            {selectedValue === "realtimeUpdates" && (
+            {selectedValue === "noticeboard" && (
               <div>
-                <Publish />
+                <NoticeBoard />
               </div>
             )}
             {selectedValue === "reports" && (
