@@ -74,6 +74,13 @@ export class TeamsBot extends TeamsActivityHandler {
           await context.sendActivity({ attachments: [CardFactory.adaptiveCard(card)] });
           break;
         }
+        //add default case
+        default: {
+          //call the assistant web service.
+          const card = AdaptiveCards.declareWithoutData(rawWelcomeCard).render();
+          await context.sendActivity({ attachments: [CardFactory.adaptiveCard(card)] });
+          break;
+        }
         /**
          * case "yourCommand": {
          *   await context.sendActivity(`Add your response here!`);
