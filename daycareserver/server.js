@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3080;
 
 // Daycare data daily updates
 var daycareData;
+var filteredDaycareData;
 // Initial messages value
 var _messages = [
     {
@@ -46,6 +47,28 @@ app.post("/botresponse", async (req, res) => {
     });
     }
     _messages.push({ role: "user", content: message.data });
+    var botResponse = await getCompletion(_messages);
+    var botMessage = botResponse.data.choices[0].message.content;
+    _messages.push({ role: "system", content: botMessage });
+    res.status(200).json(botMessage);
+});
+
+app.post("/parentchild", async (req, res) => {
+    const message = req.body;
+    if(filteredDaycareData == undefined || filteredDaycareData == null) {
+        filteredDaycareData = await getDaycareUpdatesByChildForParent(message.parentName, message.childName);
+        if(filteredDaycareData == undefined || filteredDaycareData == null) {
+            res.status(200).json("Sorry, I couldn't find any information about the child named ${message.childName} with a parent named ${message.parentName}.");   
+        }
+        console.log(JSON.stringify(filteredDaycareData));
+        _messages.push({
+            role: "system",
+            content: `The following information is about a child named ${message.childName} with a parent named ${message.parentName}: ${JSON.stringify(
+                filteredDaycareData
+            )}. Give the parent the information based on what they asked for pertaining to the child.`,
+    });
+    }
+    _messages.push({ role: "user", content: message.messageText });
     var botResponse = await getCompletion(_messages);
     var botMessage = botResponse.data.choices[0].message.content;
     _messages.push({ role: "system", content: botMessage });
@@ -97,3 +120,23 @@ async function getDaycareUpdatesData() {
         sql.close();
     }
 }
+
+async function getDaycareUpdatesByChildForParent(parentName, childName) {
+    try {
+      await sql.connect(config);
+      
+      const request = new sql.Request();
+
+      request.input('ParentName', sql.NVarChar, parentName);
+      request.input('ChildName', sql.NVarChar, childName);
+      
+      const result = await request.execute('GetChildUpdatesForParent');
+      console.log(result.recordsets[0]);
+      const rows = result.recordsets;
+      return rows;
+    } catch (error) {
+      console.error('Error:', error.message);
+    } finally {
+      sql.close();
+    }
+  }
