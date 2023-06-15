@@ -20,9 +20,9 @@ export default class NoticeBoard extends BaseDashboard<any, any> {
         {this.state.showLogin === false ? (
           <>
             <Image className="img-style" src="bg.png" />
-            <Chart />
+            {/* <Chart /> */}
             <div className="one-column">
-              {/* <Calendar /> */}
+              <Calendar />
               {/* <Task /> */}
             </div>
             {/* <Collaboration /> */}

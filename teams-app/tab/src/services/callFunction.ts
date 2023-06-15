@@ -23,9 +23,8 @@ export async function callFunction(method: Method, functionName: string, params?
 
   try {
     // Construct the base URL for the Azure Function API
-    //const apiBaseUrl = process.env.REACT_APP_FUNC_ENDPOINT + "/api/";
-    const apiBaseUrl = "https://pandacare-callgraph.azurewebsites.net/api/"
-
+    const apiBaseUrl = process.env.REACT_APP_FUNC_ENDPOINT + "/api/";
+    
     // Create an Axios instance which uses BearerTokenAuthProvider to inject token to request header
     const apiClient = createApiClient(
       apiBaseUrl,
@@ -39,7 +38,7 @@ export async function callFunction(method: Method, functionName: string, params?
 
     response = await apiClient.request({
       method,
-      url: functionName+"?code=dmCiuubR_rDaGT3EMBreKMIk_l0M7UN25fHaDYc3WDcAzFuEjYTsQ==",
+      url: functionName,
       params,
       data,
     });
