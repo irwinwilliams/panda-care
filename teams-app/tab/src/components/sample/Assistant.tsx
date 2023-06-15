@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import "./Assistant.css";
 import axios, { AxiosResponse } from "axios";
 
-const serverUrl = "http://localhost:3080";
+const serverUrl = "https://pandacaresvr.azurewebsites.net";
 export default function Assistant() {
 
 	useEffect(() => {
