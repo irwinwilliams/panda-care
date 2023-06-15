@@ -69,11 +69,11 @@ useEffect(() => {
 		const filter = {
 			$schema: "http://powerbi.com/product/schema#advanced",
 			target: {
-				table: "DailyUpdates (3)",
-				column: "childId"
+				table: "Children",
+				column: "childName"
 			},
-			operator: "Is",
-			values: childrenIds,
+			operator: "In",
+			values: ["Ava"],
 			filterType: 1,
 		};
 		console.log(filter);
@@ -84,7 +84,11 @@ useEffect(() => {
 				embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=37854ffb-688c-4aef-8a28-d3e2fb824479&groupId=6d6de5cc-1b3a-40eb-9f64-a8ccc70fc5e9&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLUVBU1QtQS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJtb2Rlcm5FbWJlZCI6dHJ1ZSwidXNhZ2VNZXRyaWNzVk5leHQiOnRydWV9fQ%3d%3d',
 				accessToken: accessToken,    // Keep as empty string, null or undefined
 				tokenType: models.TokenType.Aad,
-				
+				filters: [filter],
+				settings: {
+					filterPaneEnabled: true,
+					navContentPaneEnabled: false
+				}
 			}}
 		/></div>)	
 };
