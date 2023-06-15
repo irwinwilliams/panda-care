@@ -40,9 +40,6 @@ export async function callFunction(method: Method, functionName: string, params?
     response = await apiClient.request({
       method,
       url: functionName+"?code=dmCiuubR_rDaGT3EMBreKMIk_l0M7UN25fHaDYc3WDcAzFuEjYTsQ==",
-      headers: {
-        "x-functions-key": "dmCiuubR_rDaGT3EMBreKMIk_l0M7UN25fHaDYc3WDcAzFuEjYTsQ=="
-      },
       params,
       data,
     });
