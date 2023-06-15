@@ -24,6 +24,14 @@ var _messages = [
     }
 ];
 
+var _filteredMessages = [ 
+    { 
+        role: 'system',
+        content: 
+        "As a daycare assistant, you are to provide information about a particular child from the daycare. You will be given the data upon request."
+    }
+];
+
 
 const app = express();
 app.use(cors());
@@ -58,20 +66,20 @@ app.post("/parentchild", async (req, res) => {
     if(filteredDaycareData == undefined || filteredDaycareData == null) {
         filteredDaycareData = await getDaycareUpdatesByChildForParent(message.parentName, message.childName);
         if(filteredDaycareData == undefined || filteredDaycareData == null) {
-            res.status(200).json("Sorry, I couldn't find any information about the child named ${message.childName} with a parent named ${message.parentName}.");   
+            res.status(200).json(`Sorry, I couldn't find any information about the child named ${message.childName} with a parent named ${message.parentName}.`);   
         }
         console.log(JSON.stringify(filteredDaycareData));
-        _messages.push({
+        _filteredMessages.push({
             role: "system",
             content: `The following information is about a child named ${message.childName} with a parent named ${message.parentName}: ${JSON.stringify(
                 filteredDaycareData
             )}. Give the parent the information based on what they asked for pertaining to the child.`,
     });
     }
-    _messages.push({ role: "user", content: message.messageText });
-    var botResponse = await getCompletion(_messages);
+    _filteredMessages.push({ role: "user", content: message.messageText });
+    var botResponse = await getCompletion(_filteredMessages);
     var botMessage = botResponse.data.choices[0].message.content;
-    _messages.push({ role: "system", content: botMessage });
+    _filteredMessages.push({ role: "system", content: botMessage });
     res.status(200).json(botMessage);
 });
 
