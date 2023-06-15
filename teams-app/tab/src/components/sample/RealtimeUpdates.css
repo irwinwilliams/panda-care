@@ -8,7 +8,7 @@ h2 {
   align-items: center;
 }
 
-#ms-Dropdown-title, .ms-TextField-fieldGroup{
+#ms-Dropdown-title, .ms-Dropdown-titleIsPlaceHolder, .ms-ComboBox::after, .ms-TextField-fieldGroup{
   border-radius: 7px;
 }
 
