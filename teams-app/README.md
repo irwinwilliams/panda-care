@@ -32,10 +32,6 @@ https://github.com/irwinwilliams/panda-care
 
 https://youtu.be/H-arvO7OaC4
 
-### Team members
-
-irwinwilliams, kerisha, NicholasGray, kimaz001
-
 # How to run
 Using the teamsapp.local.yml as a guide, press F5 to run most of the applications. One project needs to be run separately in the panda-gpt-api directory.
 Once there, "npm run start" will get it up and running.
