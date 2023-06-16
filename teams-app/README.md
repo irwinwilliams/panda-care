@@ -1,70 +1,42 @@
-# Getting Started with Hello World Bot with Tab
+# Panda Care 
 
-A bot, chatbot, or conversational bot is an application that responds to simple commands sent in a chat and provides meaningful replies. The interaction with a bot can be a quick question and answer or a complex conversation.
+## Revolutionizing the day care system
 
-This is a simple "Hello World" application that has both Bot and Tab capabilities. The bot sends a welcome message when a new member is added, while the tab displays a welcome page.
+# Team Members
+ - [Nicholas Gray](https://github.com/NicholasGray)
+ - [Irwin Williams](https://github.com/irwinwilliams)
+ - [Kimberly Calbio](https://github.com/kimaz001)
+ - [Kerisha Stewart](https://github.com/kerisha)
+ 
+### Description
 
-## This sample illustrates
+PandaCare is new way for providers in day care to manage information about the children they take care of and communicate seamlessly with parents.
 
-- How to use Teams Toolkit to create a Teams app with both Bot and Tab capabilities.
+PandaCare uses 
+* Tabs to help administrators manage day care information
+* Bots to communicate between parents and the day care and vice versa
+* Proactive notifications for realtime updates (with AdaptiveCards)
+* ChatGPT to make reasoning about how the children play and eat easier
+* PowerBI for data presentation
+* Microsoft Graph for calendar integration
+* SQL Server for storage along with ef-migrations
 
-## Prerequisites
+It was certainly fun bringing together all those areas to attempt to solve a real-world challenge that we believe can be valuable for the stakeholders concerned.
 
-- [Node.js](https://nodejs.org/), supported versions: 16, 18
-- An M365 account. If you do not have M365 account, apply one from [M365 developer program](https://developer.microsoft.com/en-us/microsoft-365/dev-program)
-- [Teams Toolkit Visual Studio Code Extension](https://aka.ms/teams-toolkit) version 5.0.0 and higher or [TeamsFx CLI](https://aka.ms/teamsfx-cli)
 
-## Minimal path to awesome
+### Project Repository URL
 
-### Run the app locally
+https://github.com/irwinwilliams/panda-care
 
-- From VS Code:
-    1. hit `F5` to start debugging. Alternatively open the `Run and Debug Activity` Panel and select `Debug (Edge)` or `Debug (Chrome)`.
+### Project video
 
-- From TeamsFx CLI:
-    1. Install [ngrok](https://ngrok.com/download) and start your local tunnel service by running the command `ngrok http 3978`.
-    1. In the `env/.env.local` file, fill in the values for `BOT_DOMAIN` and `BOT_ENDPOINT` with your ngrok URL.
-       ```
-       BOT_DOMAIN=sample-id.ngrok.io
-       BOT_ENDPOINT=https://sample-id.ngrok.io
-       ```
-    1. Run command: `teamsfx provision --env local` .
-    1. Run command: `teamsfx deploy --env local` .
-    1. Run command: `teamsfx preview --env local` .
+https://youtu.be/H-arvO7OaC4
 
-### Deploy the app to Azure
+### Team members
 
-- From VS Code:
-    1. Sign into Azure by clicking the `Sign in to Azure` under the `ACCOUNTS` section from sidebar.
-    1. Click `Provision` from `LIFECYCLE` section or open the command palette and select: `Teams: Provision`.
-    1. Click `Deploy` or open the command palette and select: `Teams: Deploy`.
+irwinwilliams, kerisha, NicholasGray, kimaz001
 
-- From TeamsFx CLI:
-    1. Run command: `teamsfx account login azure`.
-    1. Run command: `teamsfx provision --env dev`.
-    1. Run command: `teamsfx deploy --env dev`.
-
-### Preview the app in Teams
-
-- From VS Code:
-    1. Open the `Run and Debug Activity` Panel. Select `Launch Remote (Edge)` or `Launch Remote (Chrome)` from the launch configuration drop-down.
-
-- From TeamsFx CLI:
-    1. Run command: `teamsfx preview --env dev`.
-
-## Advanced usage of this sample
-
-### Add Single Sign On featured
-
-Microsoft Teams provides a mechanism by which an application can obtain the signed-in Teams user token to access Microsoft Graph (and other APIs). Teams Toolkit facilitates this interaction by abstracting some of the Azure Active Directory (AAD) flows and integrations behind some simple, high-level APIs. This enables you to add single sign-on (SSO) features easily to your Teams application.
-
-Please follow this [document](https://aka.ms/teamsfx-add-sso) to add single sign on for your project.
-
-## Version History
-
-|Date| Author| Comments|
-|---|---|---|
-|Dec 9, 2022| hund030 | Onboard sample in Teams Toolkit V5.0.0|
-
-## Feedback
-We really appreciate your feedback! If you encounter any issue or error, please report issues to us following the [Supporting Guide](https://github.com/OfficeDev/TeamsFx-Samples/blob/dev/SUPPORT.md). Meanwhile you can make [recording](https://aka.ms/teamsfx-record) of your journey with our product, they really make the product better. Thank you!
+# How to run
+Using the teamsapp.local.yml as a guide, press F5 to run most of the applications. One project needs to be run separately in the panda-gpt-api directory.
+Once there, "npm run start" will get it up and running.
+Cheers!
