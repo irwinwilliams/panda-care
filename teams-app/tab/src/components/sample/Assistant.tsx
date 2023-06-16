@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import "./Assistant.css";
 import axios, { AxiosResponse } from "axios";
 
-const serverUrl = "https://pandacaresvr.azurewebsites.net";
+const serverUrl = "http://localhost:3080";
 export default function Assistant() {
 
 	useEffect(() => {
@@ -22,6 +22,7 @@ export default function Assistant() {
 
 			// Add bot response
 			try {
+				console.log("Sending message to bot");
 				console.log(message);
 				const msg = { data: message };
 				getBotResponse(msg)
@@ -46,6 +47,8 @@ export default function Assistant() {
 
 
 		function getBotResponse(msg: { data: string }): Promise<AxiosResponse> {
+			console.log("Sending message to bot from getBotResponse, sending to " + serverUrl + "/botresponse");
+			console.log(msg);
 			return axios.post(`${serverUrl}/botresponse`, msg)
 			  .then((res) => {
 				console.log(res);

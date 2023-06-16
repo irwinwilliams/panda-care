@@ -6,7 +6,7 @@ version: 1.0.0
 provision:
   - uses: aadApp/create # Creates a new Azure Active Directory (AAD) app to authenticate users if the environment variable that stores clientId is empty
     with:
-      name: panda-care # Note: when you run aadApp/update, the AAD app name will be updated based on the definition in manifest. If you don't want to change the name, make sure the name in AAD manifest is the same with the name defined here.
+      name: pandacare-aad # Note: when you run aadApp/update, the AAD app name will be updated based on the definition in manifest. If you don't want to change the name, make sure the name in AAD manifest is the same with the name defined here.
       generateClientSecret: true # If the value is false, the action will not generate client secret for you
       signInAudience: "AzureADMyOrg" # Authenticate users with a Microsoft work or school account in your organization's Azure AD tenant (for example, single tenant).
     writeToEnvironmentFile: # Write the information of created resources into environment file for the specified environment variable(s).
@@ -118,11 +118,32 @@ deploy:
       args: install --no-audit
       workingDirectory: api
 
+  # Run npm command
+  - uses: cli/runNpmCommand
+    with:
+      args: install --no-audit
+      workingDirectory: panda-data-api
+
+   # Run npm command
+  - uses: cli/runNpmCommand
+    with:
+      args: install --no-audit
+      workingDirectory: panda-gpt-api     
+
+
   # TeamsFx Azure Functions project depends on extra Azure Functions binding extensions for HTTP trigger authorization.
   - uses: cli/runDotnetCommand
     with:
       args: build extensions.csproj -o ./bin --ignore-failed-sources
       workingDirectory: api
+      execPath: ${{DOTNET_PATH}}
+
+
+  # TeamsFx Azure Functions project depends on extra Azure Functions binding extensions for HTTP trigger authorization.
+  - uses: cli/runDotnetCommand
+    with:
+      args: build panda-care-function.csproj -o ./bin --ignore-failed-sources
+      workingDirectory: panda-data-api
       execPath: ${{DOTNET_PATH}}
 
 

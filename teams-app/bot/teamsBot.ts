@@ -11,6 +11,7 @@ import rawWelcomeCard from "./adaptiveCards/welcome.json";
 import rawLearnCard from "./adaptiveCards/learn.json";
 import rawRegistrationCard from "./adaptiveCards/registration.json";
 import { AdaptiveCards } from "@microsoft/adaptivecards-tools";
+import getBotResponse from "./getBotResponse";
 
 export interface DataInterface {
   likeCount: number;
@@ -33,16 +34,16 @@ export class TeamsBot extends TeamsActivityHandler {
   conversationReferences: { [key: string]: Partial<ConversationReference> };
   //let constructor accept conversationReferences
   constructor(conversationReferences: { [key: string]: Partial<ConversationReference> }) {
-    
+
     super();
     this.conversationReferences = conversationReferences;
     this.likeCountObj = { likeCount: 0 };
 
-    
+
     this.onMessage(async (context, next) => {
       console.log("Running with Message Activity.");
       //get adaptive card invoke value
-      
+
       this.addConversationReference(context.activity);
       //console.log(conversationReferences);
       let txt = context.activity.text;
@@ -76,9 +77,28 @@ export class TeamsBot extends TeamsActivityHandler {
         }
         //add default case
         default: {
+          //get the parent's email from the conversation reference
+          var parentName = this.conversationReferences[context.activity.conversation.id].user.name;
+          var parentList = await fetch("https://pandapandapanda.azurewebsites.net/api/PandaCareFamBam?code=u0uwuzjwQ9bSDoVdGlg9Z748y5A12qd7VLyag-2T--mhAzFuqIaqlw==", {
+            method: "GET",
+          });
+          //parse the parent list to find the child based on the parent name
+          var parentListJson = await parentList.json();
+          //console.log(parentListJson);
+          var childName = "";
+          for (var i = 0; i < parentListJson.length; i++) {
+            if (parentListJson[i].ParentName == parentName) {
+              childName = parentListJson[i].ChildName[0];
+              break;
+            }
+          }
+          console.log(JSON.stringify({ messageText: txt, parentName: parentName, childName: childName }));
+          
           //call the assistant web service.
-          const card = AdaptiveCards.declareWithoutData(rawWelcomeCard).render();
-          await context.sendActivity({ attachments: [CardFactory.adaptiveCard(card)] });
+          var botResponse = await getBotResponse("http://localhost:3080", { messageText: txt, parentName: parentName, childName: childName });
+          //send the response back to the user as a plain text message
+          //console.log(botResponse.data);
+          await context.sendActivity(botResponse.data);
           break;
         }
         /**
@@ -112,7 +132,7 @@ export class TeamsBot extends TeamsActivityHandler {
     context: TurnContext,
     invokeValue: AdaptiveCardInvokeValue
   ): Promise<AdaptiveCardInvokeResponse> {
-    console.log(JSON.stringify(invokeValue));
+    console.log("Running with Adaptive Card Invoke Activity.");
     if (invokeValue.action.verb === "send-registration-form") {
       const card = AdaptiveCards.declareWithoutData(rawRegistrationCard).render();
       await context.sendActivity({ attachments: [CardFactory.adaptiveCard(card)] });
@@ -120,9 +140,10 @@ export class TeamsBot extends TeamsActivityHandler {
     else if (invokeValue.action.verb === "register") {
       var payload = invokeValue.action.data as unknown as RegistrationDataInterface;
       payload.conversationReference = JSON.stringify(this.conversationReferences[context.activity.conversation.id]);
+      console.log("Registration Data: ");
       console.log(JSON.stringify(payload));
 
-      var url = "http://localhost:7071/api/PandaSave";
+      var url = "http://localhost:7072/api/PandaSave";
       //use fetch instead of axios
       const response = await fetch(url, {
         method: "POST",

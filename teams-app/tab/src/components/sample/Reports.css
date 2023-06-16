@@ -23,7 +23,7 @@ body, #root, #root div:has(#reportContainer) {
   margin-top: 30px;
 }
 #reportContainer, #reportContainer div {
-  height: 800px;
+  height: 600px;
   width: 100%;
   display: flex;
   flex-direction: column;

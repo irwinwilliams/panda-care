@@ -28,7 +28,7 @@
                     "portOccupancy" // Validate available ports to ensure those debug ones are not occupied.
                 ],
                 "portOccupancy": [
-                    53000 ,// tab service port
+                    53000, // tab service port
                     3978, // bot service port
                     9239 // bot inspector port for Node.js debugger
                 ]
@@ -83,7 +83,9 @@
             "dependsOn": [
                 "Start bot",
                 "Start frontend",
-                "Start backend"
+                "Start backend",
+                "Start panda-data-api backend",
+                "Start panda-gpt-api backend"
             ]
         },
         {
@@ -138,48 +140,120 @@
             "command": "npm run dev:teamsfx",
             "isBackground": true,
             "options": {
-              "cwd": "${workspaceFolder}/api",
-              "env": {
-                  "PATH": "${workspaceFolder}/devTools/func:${env:PATH}"
-              }
-          },
-          "windows": {
-              "options": {
-                  "env": {
-                      "PATH": "${workspaceFolder}/devTools/func;${env:PATH}"
-                  }
-              }
-          },
+                "cwd": "${workspaceFolder}/api",
+                "env": {
+                    "PATH": "${workspaceFolder}/devTools/func:${env:PATH}"
+                }
+            },
+            "windows": {
+                "options": {
+                    "env": {
+                        "PATH": "${workspaceFolder}/devTools/func;${env:PATH}"
+                    }
+                }
+            },
             "problemMatcher": {
-              "pattern": {
-                "regexp": "^.*$",
-                "file": 0,
-                "location": 1,
-                "message": 2
-              },
-              "background": {
-                "activeOnStart": true,
-                "beginsPattern": "^.*(Job host stopped|signaling restart).*$",
-                "endsPattern": "^.*(Worker process started and initialized|Host lock lease acquired by instance ID).*$"
-              }
+                "pattern": {
+                    "regexp": "^.*$",
+                    "file": 0,
+                    "location": 1,
+                    "message": 2
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^.*(Job host stopped|signaling restart).*$",
+                    "endsPattern": "^.*(Worker process started and initialized|Host lock lease acquired by instance ID).*$"
+                }
             },
             "presentation": {
-              "reveal": "silent"
+                "reveal": "silent"
             },
             "dependsOn": "Watch backend"
-          },
-          {
+        },
+        {
             "label": "Watch backend",
             "type": "shell",
             "command": "npm run watch",
             "isBackground": true,
             "options": {
-              "cwd": "${workspaceFolder}/api"
+                "cwd": "${workspaceFolder}/api"
             },
             "problemMatcher": "$tsc-watch",
             "presentation": {
-              "reveal": "silent"
+                "reveal": "silent"
             }
-          }
+        },
+        {
+            "label": "Start panda-data-api backend",
+            "type": "shell",
+            "command": "npx func start",
+            "isBackground": true,
+            "options": {
+                "cwd": "${workspaceFolder}/panda-data-api",
+                "env": {
+                    "PATH": "${workspaceFolder}/devTools/func:${env:PATH}"
+                }
+            },
+            "windows": {
+                "options": {
+                    "env": {
+                        "PATH": "${workspaceFolder}/devTools/func;${env:PATH}"
+                    }
+                }
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^.*$",
+                    "file": 0,
+                    "location": 1,
+                    "message": 2
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^.*(Job host stopped|signaling restart).*$",
+                    "endsPattern": "^.*(Worker process started and initialized|Host lock lease acquired by instance ID).*$"
+                }
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+            "dependsOn": "Watch backend"
+        },
+        {
+            "label": "Start panda-gpt-api backend",
+            "type": "shell",
+            "command": "npm run start",
+            "isBackground": true,
+            "options": {
+                "cwd": "${workspaceFolder}/panda-gpt-api",
+                "env": {
+                    "PATH": "${workspaceFolder}/devTools/func:${env:PATH}"
+                }
+            },
+            "windows": {
+                "options": {
+                    "env": {
+                        "PATH": "${workspaceFolder}/devTools/func;${env:PATH}"
+                    }
+                }
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^.*$",
+                    "file": 0,
+                    "location": 1,
+                    "message": 2
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^.*(Job host stopped|signaling restart).*$",
+                    "endsPattern": "^.*(Worker process started and initialized|Host lock lease acquired by instance ID).*$"
+                }
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+            "dependsOn": "Watch backend"
+        },
     ]
 }
